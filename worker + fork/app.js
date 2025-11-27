@@ -6,8 +6,6 @@ const performanceObserver = new perf_hooks.PerformanceObserver((items, observer)
     console.log(items.getEntries());
 });
 
-// process.env.UV_THREADPOOL_SIZE = 8;
-
 performanceObserver.observe({entryTypes: ['measure', 'mark']});
 
 const workerFunction = array => {

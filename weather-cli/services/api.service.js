@@ -1,7 +1,19 @@
-import {getKeyValue, TOKEN_DICTIONARY} from "./storage.service.js";
+import { getKeyValue, TOKEN_DICTIONARY } from "./storage.service.js";
 
-const getWeather = async (city) => {
+const isResponseOk = async (response) => !!response.ok;
+
+const validateResponse = async (response) => {
+    if(await isResponseOk(response)) {
+        return response.json();
+    } else {
+        const errorData = await response.json();
+        throw new Error(`HTTP ${response.status}: ${errorData.message || response.statusText}`);
+    }
+}
+
+export const getWeather = async () => {
     const token = await getKeyValue(TOKEN_DICTIONARY.token);
+    const city = await getKeyValue(TOKEN_DICTIONARY.city);
     if(!token) {
         throw new Error(`Token not found, try set the token using the -t [API_KEY]`);
     }
@@ -11,10 +23,8 @@ const getWeather = async (city) => {
     url.searchParams.set('units', 'metric');
     try {
         const response = await fetch(url);
-        return await response.json();
+        return await validateResponse(response)
     } catch(e) {
-        throw new Error('HTTP Error');
+        throw e;
     }
 };
-
-export { getWeather };

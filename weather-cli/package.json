@@ -1,7 +1,7 @@
 {
-  "name": "weather-cli",
-  "version": "1.0.0",
-  "description": "",
+  "name": "vrem-cli",
+  "version": "1.0.6",
+  "description": "CLI for getting weather",
   "license": "ISC",
   "author": "Xanzik",
   "type": "module",
@@ -10,6 +10,7 @@
     "weather": "weather.js"
   },
   "scripts": {
+    "start": "node weather.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

@@ -1,15 +1,15 @@
 import chalk from 'chalk';
 import dedent from "dedent-js";
 
-const printError = (error) => {
+export const printError = (error) => {
     console.log(chalk.bgRed(' ERROR ' + ' ' + error));
 };
 
-const printSuccess = (message) => {
-    console.log(chalk.bgGreen(' SUCCESS ' + ' ' + message));
+export const printSuccess = (message) => {
+    console.log(chalk.bgGreen(' SUCCESS ') + `${message? ' ' + message : ''}`);
 };
 
-const printHelp = () => {
+export const printHelp = () => {
     console.log(
         dedent`${chalk.bgCyan(' HELP ')}
         Without parameters - to display help
@@ -19,5 +19,3 @@ const printHelp = () => {
         `
     );
 };
-
-export { printError, printSuccess, printHelp };

@@ -1,33 +1,22 @@
+#!/usr/bin/env node
 import { getArgs } from "./helpers/args.js";
-import { printHelp, printSuccess, printError } from "./services/log.service.js";
-import {saveKeyValue, TOKEN_DICTIONARY} from "./services/storage.service.js";
-import {getWeather} from "./services/api.service.js";
+import { printHelp } from "./services/log.service.js";
+import { saveCity, saveToken } from "./services/storage.service.js";
+import { getForecast } from "./services/weather.service.js";
 
-const saveToken = async (token) => {
-    if(!token.length) {
-        printError("Token not provided.");
-        return;
-    }
-    try {
-        await saveKeyValue(TOKEN_DICTIONARY.token, token);
-        printSuccess('Token saved successfully.');
-    } catch (e) {
-        printError(e.message);
-    }
-};
-
-const initCLI = () => {
+const initCLI = async () => {
     const args = getArgs(process.argv);
     if(args.h) {
         printHelp();
+        return;
     }
     if(args.s) {
-        console.log(args.s);
+        await saveCity(args.s);
     }
     if(args.t) {
-        return saveToken(args.t);
+        await saveToken(args.t);
     }
-    getWeather('');
+    await getForecast();
 }
 
 initCLI();
