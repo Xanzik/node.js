@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "express": "^5.1.0",
+    "inversify": "^7.10.4",
+    "reflect-metadata": "^0.2.2",
     "tslog": "^4.10.2"
   }
 }

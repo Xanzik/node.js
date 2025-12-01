@@ -1,11 +1,14 @@
-import type { LoggerService } from "../logger/logger.service.js";
 import {type Response, Router} from "express";
 import type { IRoute } from "./route.interface.js";
+import type {ILogger} from "../logger/logger.interface.js";
+import {injectable} from "inversify";
+import {inject} from "inversify";
+import {TYPES} from "../types.js";
 
-
+@injectable()
 export abstract class BaseController {
     private readonly _router: Router;
-    protected constructor(private logger: LoggerService) {
+    protected constructor(@inject(TYPES.ILogger) private logger: ILogger) {
         this._router = Router();
     }
 

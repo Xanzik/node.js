@@ -1,23 +1,25 @@
 import express, {type Express} from "express";
 import type {Server} from "http";
-import { LoggerService } from "./logger/logger.service.js";
-import {UsersController} from "./users/users.controller.js";
-import type {ExceptionFilter} from "./errors/exception.filter.js";
+import {injectable, inject} from "inversify";
+import {TYPES} from "./types.js";
+import type {ILogger} from "./logger/logger.interface.js";
+import type {IExceptionFilter} from "./errors/exception.filter.interface.js";
+import type {IUserController} from "./users/userController.interface.js";
 
+@injectable()
 export class App {
     app: Express;
     server: Server;
     port: number;
-    logger: LoggerService;
-    usersController: UsersController;
-    exceptionFilter: ExceptionFilter;
 
-    constructor(logger: LoggerService, usersController: UsersController, exceptionFilter: ExceptionFilter) {
+    constructor(
+        @inject(TYPES.ILogger) private logger: ILogger,
+        @inject(TYPES.IUsersController) private usersController: IUserController,
+        @inject(TYPES.IExceptionFilter) private exceptionFilter: IExceptionFilter,
+    ) {
         this.app = express();
         this.port = 8000;
         this.logger = logger;
-        this.usersController = usersController;
-        this.exceptionFilter = exceptionFilter;
     }
 
     useRoutes(): void {
