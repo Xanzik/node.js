@@ -2,3 +2,8 @@
 /weather-cli/node_modules
 /app/node_modules
 /app/dist
+app/.prettierrc
+app/.eslintrc
+app/eslint.config.mjs
+app/nodemon.json
+/app/.vscode
