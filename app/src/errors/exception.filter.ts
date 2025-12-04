@@ -10,7 +10,7 @@ import type { Request, Response, NextFunction } from 'express';
 
 @injectable()
 export class ExceptionFilter implements IExceptionFilter {
-	constructor(@inject(TYPES.ILogger) private logger: ILogger) {}
+	constructor(@inject(TYPES.Logger) private logger: ILogger) {}
 	catch(err: Error | HTTPError, req: Request, res: Response, next: NextFunction): void {
 		if (err instanceof HTTPError) {
 			this.logger.error(`[${err.context}] Error ${err.statusCode} : ${err.message}`);

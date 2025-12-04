@@ -7,3 +7,7 @@ app/.eslintrc
 app/eslint.config.mjs
 app/nodemon.json
 /app/.vscode
+app/.env
+app/dev.db
+app/.env
+dev.db
