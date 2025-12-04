@@ -1,12 +1,16 @@
 import { Container, ContainerModule, type ContainerModuleLoadOptions } from 'inversify';
+
 import { App } from './app';
-import { TYPES } from './types';
-import { LoggerService } from './logger/logger.service';
-import type { ILogger } from './logger/logger.interface';
-import { UserController } from './users/userController';
 import { ExceptionFilter } from './errors/exception.filter';
+import { LoggerService } from './logger/logger.service';
+import { TYPES } from './types';
+import { UserController } from './users/users.controller';
+import { UserService } from './users/users.service';
+
 import type { IExceptionFilter } from './errors/exception.filter.interface';
-import type { IUserController } from './users/userController.interface';
+import type { ILogger } from './logger/logger.interface';
+import type { IUserController } from './users/users.controller.interface';
+import type { IUserService } from './users/users.service.interface';
 
 export interface IBootstrapReturn {
 	app: App;
@@ -17,6 +21,7 @@ export const appBindings = new ContainerModule((options: ContainerModuleLoadOpti
 	options.bind<ILogger>(TYPES.ILogger).to(LoggerService);
 	options.bind<IExceptionFilter>(TYPES.IExceptionFilter).to(ExceptionFilter);
 	options.bind<IUserController>(TYPES.IUsersController).to(UserController);
+	options.bind<IUserService>(TYPES.IUserService).to(UserService);
 	options.bind<App>(TYPES.Application).to(App);
 });
 

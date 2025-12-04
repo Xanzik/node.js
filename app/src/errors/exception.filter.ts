@@ -1,9 +1,12 @@
-import type { Request, Response, NextFunction } from 'express';
-import type { IExceptionFilter } from './exception.filter.interface';
-import { HTTPError } from './http-error.class';
 import { inject, injectable } from 'inversify';
-import type { ILogger } from '../logger/logger.interface';
+
 import { TYPES } from '../types';
+
+import { HTTPError } from './http-error.class';
+
+import type { IExceptionFilter } from './exception.filter.interface';
+import type { ILogger } from '../logger/logger.interface';
+import type { Request, Response, NextFunction } from 'express';
 
 @injectable()
 export class ExceptionFilter implements IExceptionFilter {
