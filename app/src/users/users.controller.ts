@@ -17,7 +17,7 @@ import type { NextFunction, Request, Response } from 'express';
 export class UserController extends BaseController implements IUserController {
 	constructor(
 		@inject(TYPES.Logger) private loggerService: ILogger,
-		@inject(TYPES.UserService) private UserService: IUserService,
+		@inject(TYPES.UserService) private userService: IUserService,
 	) {
 		super(loggerService);
 		this.bindRoutes([
@@ -36,9 +36,16 @@ export class UserController extends BaseController implements IUserController {
 		]);
 	}
 
-	login(req: Request<object, object, UserLoginDto>, res: Response, next: NextFunction): void {
-		console.log(req.body);
-		next(new HTTPError(401, 'Authentication failed'));
+	async login(
+		{ body }: Request<object, object, UserLoginDto>,
+		res: Response,
+		next: NextFunction,
+	): Promise<void> {
+		const result = await this.userService.validateUser(body);
+		if (!result) {
+			return next(new HTTPError(401, 'Authentication failed'));
+		}
+		this.ok(res, { email: body.email });
 	}
 
 	async register(
@@ -46,10 +53,10 @@ export class UserController extends BaseController implements IUserController {
 		res: Response,
 		next: NextFunction,
 	): Promise<void> {
-		const result = await this.UserService.createUser(body);
+		const result = await this.userService.createUser(body);
 		if (!result) {
 			return next(new HTTPError(422, 'User already exists'));
 		}
-		this.ok(res, { email: result.email });
+		this.ok(res, { email: result.email, id: result.id });
 	}
 }

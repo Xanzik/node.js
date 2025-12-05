@@ -11,6 +11,8 @@ import { LoggerService } from './logger/logger.service';
 import { TYPES } from './types';
 import { UserController } from './users/users.controller';
 import { IUserController } from './users/users.controller.interface';
+import { IUsersRepository } from './users/users.repository.interface';
+import { UsersRepository } from './users/users.respository';
 import { UserService } from './users/users.service';
 import { IUserService } from './users/users.service.interface';
 
@@ -26,6 +28,7 @@ export const appBindings = new ContainerModule((options: ContainerModuleLoadOpti
 	options.bind<IUserService>(TYPES.UserService).to(UserService).inSingletonScope();
 	options.bind<PrismaService>(TYPES.PrismaService).to(PrismaService).inSingletonScope();
 	options.bind<IConfigService>(TYPES.ConfigService).to(ConfigService).inSingletonScope();
+	options.bind<IUsersRepository>(TYPES.UserRepository).to(UsersRepository).inSingletonScope();
 	options.bind<App>(TYPES.Application).to(App).inSingletonScope();
 });
 
